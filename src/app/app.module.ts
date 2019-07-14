@@ -7,7 +7,8 @@ import { HomeComponent } from './components/home/home.component';
 import { ApiService } from './service/api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ErrorComponent } from './components/error/error.component';
-
+import { DataTablesModule } from 'angular-datatables';
+import { ChartsModule } from 'ng2-charts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,7 +18,9 @@ import { ErrorComponent } from './components/error/error.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    DataTablesModule,
+    HttpClientModule,
+    ChartsModule
   ],
   providers: [
     ApiService
