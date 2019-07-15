@@ -16,11 +16,6 @@
 </div>
 <div class="container" style="padding-bottom: 30px">
 
-    <!--  <div class="col-lg-10 offset-lg-1">
-        <app-line-chart class="app-chart"></app-line-chart>
-    </div>
- -->
-
     <div class="col-lg-10 offset-lg-1" style="display: block" [ngClass]="{'hidden': actualMode != 'grafic'}">
         <app-bar-chart class="app-chart">
         </app-bar-chart>
@@ -30,14 +25,16 @@
         <table datatable class="row-border hover">
             <thead>
                 <tr>
-                    <th>Vehiculo</th>
-                    <th>Tiempo</th>
+                    <th>DNI</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let dt of dataForTable">
-                    <td>{{ dt.vehiculo }}</td>
-                    <td>{{ dt.tiempo }}</td>
+                    <td>{{ dt.dni }}</td>
+                    <td>{{ dt.nombre }}</td>
+                    <td>{{ dt.cantidad }}</td>
                 </tr>
             </tbody>
         </table>

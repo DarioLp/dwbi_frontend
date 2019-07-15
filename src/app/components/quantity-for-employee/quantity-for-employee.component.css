@@ -1,0 +1,26 @@
+.app-chart {
+    display: block !important;
+    width: 100% !important;
+}
+
+.sub-header {
+    margin-bottom: 40px;
+    margin-top: 50px;
+    background-color: #dfdbdb;
+    height: 200px;
+    margin-bottom: 50px;
+    padding: 25px 10px;
+}
+
+.tab {
+    float: left;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.table {
+    box-shadow: 0px 0px 0px 1px black;
+    padding: 7px;
+}

@@ -1,18 +1,18 @@
 import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
 import { ApiService } from 'src/app/service/api.service';
 import { BarChartComponent } from '../bar-chart/bar-chart.component';
-
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-quantity-for-employee',
+  templateUrl: './quantity-for-employee.component.html',
+  styleUrls: ['./quantity-for-employee.component.css']
 })
-export class HomeComponent implements OnInit {
+export class QuantityForEmployeeComponent implements OnInit {
 
   @ViewChild(BarChartComponent, { static: false }) barChart: BarChartComponent;
+
   selectMode = 'grafic';
   actualMode = 'grafic';
-  timeForVehicle = [];
+  quantityForEmployee = [];
   dataForTable = [];
   constructor(
     private apiService: ApiService,
@@ -20,11 +20,11 @@ export class HomeComponent implements OnInit {
 
   async ngOnInit() {
     try {
-      this.dataForTable = await this.apiService.get('timeForvehicle') as Array<any>;
+      this.dataForTable = await this.apiService.get('cantidadPorEmpleado') as Array<any>;
       for (const data of this.dataForTable) {
-        this.timeForVehicle.push({ label: data.vehiculo, data: data.tiempo });
+        this.quantityForEmployee.push({ label: data.nombre, data: data.cantidad });
       }
-      this.barChart.setData(this.timeForVehicle);
+      this.barChart.setData(this.quantityForEmployee);
 
 
     } catch (e) {
@@ -35,8 +35,9 @@ export class HomeComponent implements OnInit {
   async change() {
     this.actualMode = this.selectMode;
     if (this.actualMode === 'grafic') {
-      this.barChart.setData(this.timeForVehicle);
+      this.barChart.setData(this.quantityForEmployee);
     }
+
     this.zone.run(() => { });
   }
 

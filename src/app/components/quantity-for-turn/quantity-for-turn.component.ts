@@ -1,18 +1,20 @@
 import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
 import { ApiService } from 'src/app/service/api.service';
 import { BarChartComponent } from '../bar-chart/bar-chart.component';
+import { PieChartComponent } from '../pie-chart/pie-chart.component';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-quantity-for-turn',
+  templateUrl: './quantity-for-turn.component.html',
+  styleUrls: ['./quantity-for-turn.component.css']
 })
-export class HomeComponent implements OnInit {
-
+export class QuantityForTurnComponent implements OnInit {
   @ViewChild(BarChartComponent, { static: false }) barChart: BarChartComponent;
+  @ViewChild(PieChartComponent, { static: false }) pieChart: PieChartComponent;
+
   selectMode = 'grafic';
   actualMode = 'grafic';
-  timeForVehicle = [];
+  quantityForTurn = [];
   dataForTable = [];
   constructor(
     private apiService: ApiService,
@@ -20,11 +22,11 @@ export class HomeComponent implements OnInit {
 
   async ngOnInit() {
     try {
-      this.dataForTable = await this.apiService.get('timeForvehicle') as Array<any>;
+      this.dataForTable = await this.apiService.get('cantidadPorTurno') as Array<any>;
       for (const data of this.dataForTable) {
-        this.timeForVehicle.push({ label: data.vehiculo, data: data.tiempo });
+        this.quantityForTurn.push({ label: data.horario, data: data.cantidad });
       }
-      this.barChart.setData(this.timeForVehicle);
+      this.pieChart.setData(this.quantityForTurn);
 
 
     } catch (e) {
@@ -35,8 +37,9 @@ export class HomeComponent implements OnInit {
   async change() {
     this.actualMode = this.selectMode;
     if (this.actualMode === 'grafic') {
-      this.barChart.setData(this.timeForVehicle);
+      this.pieChart.setData(this.quantityForTurn);
     }
+
     this.zone.run(() => { });
   }
 

@@ -11,7 +11,7 @@ export class BarChartComponent implements OnInit {
 
   data: Array<any>;
 
-  public barChartOptions: ChartOptions = {
+  barChartOptions: ChartOptions = {
     responsive: true,
     // We use these empty structures as placeholders for dynamic theming.
     scales: { xAxes: [{}], yAxes: [{}] },
@@ -22,12 +22,12 @@ export class BarChartComponent implements OnInit {
       }
     }
   };
-  public barChartLabels: Label[] = [];
-  public barChartData: ChartDataSets[] = [
+  barChartLabels: Label[] = [];
+  barChartData: ChartDataSets[] = [
     { data: [], label: 'Promedio minutos de viaje' },
   ];
-  public barChartLegend = true;
-  public barChartType: ChartType = 'bar';
+  barChartLegend = true;
+  barChartType: ChartType = 'bar';
 
   constructor(private zone: NgZone) { }
 
@@ -39,8 +39,8 @@ export class BarChartComponent implements OnInit {
     this.barChartLabels = [];
     this.barChartData[0].data = [];
     for (const d of this.data) {
-      this.barChartLabels.push(d.Vehiculo);
-      this.barChartData[0].data.push(d.Tiempo);
+      this.barChartLabels.push(d.label);
+      this.barChartData[0].data.push(d.data);
     }
     this.zone.run(() => {
     });
