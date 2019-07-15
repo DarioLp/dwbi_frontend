@@ -1,17 +1,48 @@
-<div class="container">
+<div class="row sub-header">
 
-    <div class="col-lg-10 offset-lg-1">
-        <canvas baseChart [chartType]="'line'" [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
-            [legend]="true" (chartClick)="onChartClick($event)">
-        </canvas>
-        <div>
-        </div>
+    <label for="mode" class="col-1 col-form-label">Modo:</label>
+    <div class="col-11">
+        <select class="form-control" name="mode" [(ngModel)]="selectMode">
+            <option value="grafic">Grafico</option>
+            <option value="report">Reporte</option>
+        </select>
+
     </div>
 
-    <div class="col-lg-10 offset-lg-1" style="display: block">
-        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-            [legend]="barChartLegend" [chartType]="barChartType">
-        </canvas>
+    <div class="col-4 offset-4">
+        <button class="btn btn-success btn-block" (click)="change()">Aplicar</button>
+    </div>
+
+</div>
+<div class="container" style="padding-bottom: 30px">
+
+    <!--  <div class="col-lg-10 offset-lg-1">
+        <app-line-chart class="app-chart"></app-line-chart>
+    </div>
+ -->
+
+    <div class="col-lg-10 offset-lg-1" style="display: block" [ngClass]="{'hidden': actualMode != 'grafic'}">
+        <app-bar-chart class="app-chart">
+        </app-bar-chart>
+    </div>
+
+    <div class="col-lg-10 offset-lg-1 table" [ngClass]="{'hidden': actualMode !='report'}">
+        <table datatable class="row-border hover">
+            <thead>
+                <tr>
+                    <th>Vehiculo</th>
+                    <th>Tiempo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let tfv of timeForVehicle">
+                    <td>{{ tfv.Vehiculo }}</td>
+                    <td>{{ tfv.Tiempo }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+
     </div>
 
 </div>

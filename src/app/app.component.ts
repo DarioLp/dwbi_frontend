@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  headerColor = '#E03137';
   title = 'dwbi-front';
 }

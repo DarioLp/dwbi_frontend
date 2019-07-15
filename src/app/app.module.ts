@@ -9,18 +9,25 @@ import { HttpClientModule } from '@angular/common/http';
 import { ErrorComponent } from './components/error/error.component';
 import { DataTablesModule } from 'angular-datatables';
 import { ChartsModule } from 'ng2-charts';
+import { BarChartComponent } from './components/bar-chart/bar-chart.component';
+import { LineChartComponent } from './components/line-chart/line-chart.component';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    ErrorComponent
+    ErrorComponent,
+    BarChartComponent,
+    LineChartComponent
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     DataTablesModule,
     HttpClientModule,
-    ChartsModule
+    ChartsModule,
+
   ],
   providers: [
     ApiService
