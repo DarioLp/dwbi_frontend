@@ -16,6 +16,7 @@ export class ApiService {
       this.http.get(this.URL_API + endpoint)
         .subscribe((response: any) => {
           if (response.status === 200) {
+            console.log(response);
             resolve(response.result);
           } else {
             console.log(response);

@@ -1,18 +1,17 @@
-import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from 'src/app/service/api.service';
 import { LineChartComponent } from '../line-chart/line-chart.component';
-
 @Component({
-  selector: 'app-quantity-for-employee-and-month',
-  templateUrl: './quantity-for-employee-and-month.component.html',
-  styleUrls: ['./quantity-for-employee-and-month.component.css']
+  selector: 'app-food-for-date',
+  templateUrl: './food-for-date.component.html',
+  styleUrls: ['./food-for-date.component.css']
 })
-export class QuantityForEmployeeAndMonthComponent implements OnInit {
-  @ViewChild(LineChartComponent, { static: false }) lineChart: LineChartComponent;
+export class FoodForDateComponent implements OnInit {
 
+  @ViewChild(LineChartComponent, { static: false }) lineChart: LineChartComponent;
   values = [];
-  employees = [];
-  employee: any;
+  foods = [];
+  food: any;
   months = [{
     id: '01',
     name: 'Enero',
@@ -53,29 +52,32 @@ export class QuantityForEmployeeAndMonthComponent implements OnInit {
   years = [2017, 2018, 2019];
   year: number;
   month: string;
+  mode = 'orders';
+  type: string;
   constructor(private apiService: ApiService) {
     this.year = this.years[0];
     this.month = '05';
   }
 
   async ngOnInit() {
-    this.employees = await this.apiService.get('getEmployees') as Array<any>;
-    this.employee = this.employees[0].dni;
+    this.foods = await this.apiService.get('getFoods') as Array<any>;
+    this.food = 1311;
+    this.type = 'plato_principal_id';
     this.filter();
   }
 
   async filter() {
     const body = {
-      employee: this.employee,
+      type: this.type,
+      food: this.food,
       year: this.year,
       month: this.month
     };
-
     try {
-      this.values = await this.apiService.post('QuantityForEaD', body) as Array<any>;
-      console.log(this.values);
-      const found = this.employees.find((employee) => {
-        return employee.dni == this.employee;
+      const url = (this.mode === 'orders') ? 'quantityForFood' : 'amountForFood';
+      this.values = await this.apiService.post(url, body) as Array<any>;
+      const found = this.foods.find((food) => {
+        return food.id == this.food;
       });
       const quantities = [];
       const labels = [];
@@ -83,7 +85,7 @@ export class QuantityForEmployeeAndMonthComponent implements OnInit {
         quantities.push(val.cantidad);
         labels.push(val.fecha);
       }
-      this.lineChart.setData(quantities, labels, found.nombre);
+      this.lineChart.setData(quantities, labels, found.food_name);
     } catch (e) {
       console.log(e);
     }

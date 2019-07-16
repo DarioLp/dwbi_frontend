@@ -16,6 +16,10 @@ import { QuantityForEmployeeComponent } from './components/quantity-for-employee
 import { QuantityForTurnComponent } from './components/quantity-for-turn/quantity-for-turn.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { QuantityForEmployeeAndMonthComponent } from './components/quantity-for-employee-and-month/quantity-for-employee-and-month.component';
+import { CompanyComponent } from './components/company/company.component';
+import { FoodForDateComponent } from './components/food-for-date/food-for-date.component';
+import { QuantityByCompanyComponent } from './components/quantity-by-company/quantity-by-company.component';
+import { QuantitiesByCompanyComponent } from './components/quantities-by-company/quantities-by-company.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +30,11 @@ import { QuantityForEmployeeAndMonthComponent } from './components/quantity-for-
     QuantityForEmployeeComponent,
     QuantityForTurnComponent,
     PieChartComponent,
-    QuantityForEmployeeAndMonthComponent
+    QuantityForEmployeeAndMonthComponent,
+    CompanyComponent,
+    FoodForDateComponent,
+    QuantityByCompanyComponent,
+    QuantitiesByCompanyComponent
   ],
   imports: [
     FormsModule,

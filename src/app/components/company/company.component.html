@@ -1,0 +1,43 @@
+<div class="row sub-header" style="height: 110%;">
+
+    <label for="company" class="col-1 col-form-label">Compañia:</label>
+    <div class="col-3">
+        <select class="form-control" name="company" [(ngModel)]="company">
+            <option *ngFor="let company of companies" value="{{company.company_id}}">{{company.company_name}}</option>
+        </select>
+    </div>
+    <label for="moth" class="col-1 col-form-label">Mes:</label>
+    <div class="col-3">
+        <select class="form-control" name="month" [(ngModel)]="month">
+            <option *ngFor="let month of months" value="{{month.id}}">
+                {{month.name}}
+            </option>
+        </select>
+    </div>
+    <label for="year" class="col-1 col-form-label">Año:</label>
+    <div class="col-3">
+        <select class="form-control" name="year" [(ngModel)]="year">
+            <option *ngFor="let year of years">{{year}}</option>
+        </select>
+    </div>
+
+    <label for="company" class="col-1 col-form-label" style="margin-top:20px">Modo:</label>
+    <div class="col-11" style="margin-top:20px">
+        <select class="form-control" name="company" [(ngModel)]="mode">
+            <option value="amount">Monto</option>
+            <option value="orders">Cantidad de ordenes</option>
+        </select>
+    </div>
+
+    <div class="col-4 offset-4" style="margin-top:10px">
+        <button class="btn btn-success btn-block" (click)="filter()">Aplicar</button>
+    </div>
+
+
+</div>
+
+<div class="container" style="padding-bottom: 30px">
+    <div class="col-lg-10 offset-lg-1">
+        <app-line-chart class="app-chart"></app-line-chart>
+    </div>
+</div>

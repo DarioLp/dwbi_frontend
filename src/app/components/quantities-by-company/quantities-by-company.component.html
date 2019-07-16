@@ -1,0 +1,23 @@
+<div class="row sub-header" style="height: 110%;">
+
+    <label for="company" class="col-1 col-form-label" style="margin-top:15px;margin-bottom:15px">Modo:</label>
+    <div class="col-11" style="margin-top:15px;margin-bottom:15px">
+        <select class="form-control" name="company" [(ngModel)]="mode">
+            <option value="amount">Monto</option>
+            <option value="count">Cantidad de ordenes</option>
+        </select>
+    </div>
+
+    <div class="col-4 offset-4" style="margin-top:10px">
+        <button class="btn btn-success btn-block" (click)="filter()">Aplicar</button>
+    </div>
+
+
+</div>
+
+<div class="container" style="padding-bottom: 30px">
+    <div class="col-lg-10 offset-lg-1">
+        <app-bar-chart class="app-chart">
+        </app-bar-chart>
+    </div>
+</div>

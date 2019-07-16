@@ -1,18 +1,17 @@
 import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
 import { ApiService } from 'src/app/service/api.service';
 import { LineChartComponent } from '../line-chart/line-chart.component';
-
 @Component({
-  selector: 'app-quantity-for-employee-and-month',
-  templateUrl: './quantity-for-employee-and-month.component.html',
-  styleUrls: ['./quantity-for-employee-and-month.component.css']
+  selector: 'app-company',
+  templateUrl: './company.component.html',
+  styleUrls: ['./company.component.css']
 })
-export class QuantityForEmployeeAndMonthComponent implements OnInit {
-  @ViewChild(LineChartComponent, { static: false }) lineChart: LineChartComponent;
+export class CompanyComponent implements OnInit {
 
+  @ViewChild(LineChartComponent, { static: false }) lineChart: LineChartComponent;
   values = [];
-  employees = [];
-  employee: any;
+  companies = [];
+  company: any;
   months = [{
     id: '01',
     name: 'Enero',
@@ -53,29 +52,29 @@ export class QuantityForEmployeeAndMonthComponent implements OnInit {
   years = [2017, 2018, 2019];
   year: number;
   month: string;
+  mode = 'orders';
   constructor(private apiService: ApiService) {
     this.year = this.years[0];
     this.month = '05';
   }
 
   async ngOnInit() {
-    this.employees = await this.apiService.get('getEmployees') as Array<any>;
-    this.employee = this.employees[0].dni;
+    this.companies = await this.apiService.get('getCompanies') as Array<any>;
+    this.company = this.companies[0].dni;
     this.filter();
   }
 
   async filter() {
     const body = {
-      employee: this.employee,
+      company: this.company,
       year: this.year,
       month: this.month
     };
-
     try {
-      this.values = await this.apiService.post('QuantityForEaD', body) as Array<any>;
-      console.log(this.values);
-      const found = this.employees.find((employee) => {
-        return employee.dni == this.employee;
+      const url = (this.mode === 'orders') ? 'quantityForCompany' : 'amountForCompany';
+      this.values = await this.apiService.post(url, body) as Array<any>;
+      const found = this.companies.find((company) => {
+        return company.company_id == this.company;
       });
       const quantities = [];
       const labels = [];
@@ -83,7 +82,7 @@ export class QuantityForEmployeeAndMonthComponent implements OnInit {
         quantities.push(val.cantidad);
         labels.push(val.fecha);
       }
-      this.lineChart.setData(quantities, labels, found.nombre);
+      this.lineChart.setData(quantities, labels, found.company_name);
     } catch (e) {
       console.log(e);
     }
