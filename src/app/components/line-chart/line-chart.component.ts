@@ -22,16 +22,16 @@ export class LineChartComponent implements OnInit {
   ngOnInit() {
   }
 
-  setData() {
-    this.chartData.push({ data: [330, 600, 260, 700], label: 'Account A' });
-    this.chartData.push({ data: [120, 455, 100, 340], label: 'Account B' });
-    this.chartData.push({ data: [45, 67, 800, 500], label: 'Account C' });
-    this.chartLabels.push('January', 'February', 'Mars', 'April');
+  setData(quantities, labels, employee: string) {
+    this.chartData = [];
+    this.chartLabels = [];
+    this.chartData.push({ data: quantities, label: employee });
+    this.chartLabels = labels;
+    this.flag = true;
 
     this.zone.run(() => {
 
     });
-    this.flag = true;
   }
 
 }

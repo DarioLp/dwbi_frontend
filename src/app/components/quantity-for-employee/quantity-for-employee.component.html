@@ -1,23 +1,21 @@
 <div class="row sub-header">
 
     <label for="mode" class="col-1 col-form-label">Modo:</label>
-    <div class="col-11">
+    <div class="col-11" style="margin-bottom:10px">
         <select class="form-control" name="mode" [(ngModel)]="selectMode">
             <option value="grafic">Grafico</option>
             <option value="report">Reporte</option>
         </select>
-
     </div>
-    <div class="col-11">
-        <label>Fecha desde:</label>
-        <input [(ngModel)]="fechaDesdeParam">
+    <label for="mode" class="col-1 col-form-label">Desde:</label>
+    <div class="col-5">
+        <input class="form-control" type="date" [(ngModel)]="fechaDesdeParam">
     </div>
-    <div class="col-11">
-        <label>Fecha hasta:</label>
-        <input [(ngModel)]="fechaHastaParam">
+    <label for="mode" class="col-1 col-form-label">Hasta:</label>
+    <div class="col-5">
+        <input class="form-control" type="date" [(ngModel)]="fechaHastaParam">
     </div>
-
-    <div class="col-4 offset-4">
+    <div class="col-4 offset-4" style="margin-top:10px">
         <button class="btn btn-success btn-block" (click)="filter()">Aplicar</button>
     </div>
 

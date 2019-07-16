@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   fechaHastaParam = '';
   timeForVehicle = [];
   dataForTable = [];
+
   constructor(
     private apiService: ApiService,
     private zone: NgZone) { }
@@ -32,15 +33,14 @@ export class HomeComponent implements OnInit {
     this.zone.run(() => { });
   }
 
-  async filter(){
-    var query = ``;
-    if(this.fechaDesdeParam && this.fechaHastaParam) query = `?fechaDesde='${this.fechaDesdeParam}'&fechaHasta='${this.fechaHastaParam}'`;
-    if(this.fechaDesdeParam && !this.fechaHastaParam) query = `?fechaDesde='${this.fechaDesdeParam}'`;
-    if(!this.fechaDesdeParam && this.fechaHastaParam) query = `?fechaHasta='${this.fechaHastaParam}'`;
-    
+  async filter() {
+    const body = {
+      desde: this.fechaDesdeParam,
+      hasta: this.fechaHastaParam
+    };
     this.timeForVehicle = [];
     try {
-      this.dataForTable = await this.apiService.get(`timeForvehicle${query}`) as Array<any>;
+      this.dataForTable = await this.apiService.post('timeForvehicle', body) as Array<any>;
       for (const data of this.dataForTable) {
         this.timeForVehicle.push({ label: data.vehiculo, data: data.tiempo });
       }

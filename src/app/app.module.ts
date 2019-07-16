@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { QuantityForEmployeeComponent } from './components/quantity-for-employee/quantity-for-employee.component';
 import { QuantityForTurnComponent } from './components/quantity-for-turn/quantity-for-turn.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+import { QuantityForEmployeeAndMonthComponent } from './components/quantity-for-employee-and-month/quantity-for-employee-and-month.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +25,8 @@ import { PieChartComponent } from './components/pie-chart/pie-chart.component';
     LineChartComponent,
     QuantityForEmployeeComponent,
     QuantityForTurnComponent,
-    PieChartComponent
+    PieChartComponent,
+    QuantityForEmployeeAndMonthComponent
   ],
   imports: [
     FormsModule,
