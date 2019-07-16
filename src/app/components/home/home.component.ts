@@ -21,17 +21,7 @@ export class HomeComponent implements OnInit {
     private zone: NgZone) { }
 
   async ngOnInit() {
-    try {
-      this.dataForTable = await this.apiService.get('timeForvehicle') as Array<any>;
-      for (const data of this.dataForTable) {
-        this.timeForVehicle.push({ label: data.vehiculo, data: data.tiempo });
-      }
-      this.barChart.setData(this.timeForVehicle);
-
-
-    } catch (e) {
-      console.log(e);
-    }
+    this.filter();
   }
 
   async change() {

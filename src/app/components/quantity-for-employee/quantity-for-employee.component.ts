@@ -12,6 +12,8 @@ export class QuantityForEmployeeComponent implements OnInit {
 
   selectMode = 'grafic';
   actualMode = 'grafic';
+  fechaDesdeParam = ``;
+  fechaHastaParam = ``;
   quantityForEmployee = [];
   dataForTable = [];
   constructor(
@@ -19,17 +21,7 @@ export class QuantityForEmployeeComponent implements OnInit {
     private zone: NgZone) { }
 
   async ngOnInit() {
-    try {
-      this.dataForTable = await this.apiService.get('cantidadPorEmpleado') as Array<any>;
-      for (const data of this.dataForTable) {
-        this.quantityForEmployee.push({ label: data.nombre, data: data.cantidad });
-      }
-      this.barChart.setData(this.quantityForEmployee);
-
-
-    } catch (e) {
-      console.log(e);
-    }
+    this.filter();
   }
 
   async change() {
@@ -39,6 +31,28 @@ export class QuantityForEmployeeComponent implements OnInit {
     }
 
     this.zone.run(() => { });
+  }
+
+  async filter(){
+    var query = ``;
+    if(this.fechaDesdeParam && this.fechaHastaParam) query = `?fechaDesde='${this.fechaDesdeParam}'&fechaHasta='${this.fechaHastaParam}'`;
+    if(this.fechaDesdeParam && !this.fechaHastaParam) query = `?fechaDesde='${this.fechaDesdeParam}'`;
+    if(!this.fechaDesdeParam && this.fechaHastaParam) query = `?fechaHasta='${this.fechaHastaParam}'`;
+    
+    this.quantityForEmployee = [];
+    try {
+      this.dataForTable = await this.apiService.get(`cantidadPorEmpleado${query}`) as Array<any>;
+      for (const data of this.dataForTable) {
+        this.quantityForEmployee.push({ label: data.nombre, data: data.cantidad });
+      }
+      this.barChart.setData(this.quantityForEmployee);
+
+
+    } catch (e) {
+      console.log(e);
+    }
+
+    this.change();
   }
 
 }
