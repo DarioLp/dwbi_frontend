@@ -6,11 +6,17 @@
             <option value="grafic">Grafico</option>
             <option value="report">Reporte</option>
         </select>
-
     </div>
-
+    <div class="col-11">
+        <label>Fecha desde:</label>
+        <input [(ngModel)]="fechaDesdeParam">
+    </div>
+    <div class="col-11">
+        <label>Fecha hasta:</label>
+        <input [(ngModel)]="fechaHastaParam">
+    </div>
     <div class="col-4 offset-4">
-        <button class="btn btn-success btn-block" (click)="change()">Aplicar</button>
+        <button class="btn btn-success btn-block" (click)="filter()">Aplicar</button>
     </div>
 
 </div>

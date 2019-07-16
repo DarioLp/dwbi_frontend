@@ -12,6 +12,8 @@ export class HomeComponent implements OnInit {
   @ViewChild(BarChartComponent, { static: false }) barChart: BarChartComponent;
   selectMode = 'grafic';
   actualMode = 'grafic';
+  fechaDesdeParam = '';
+  fechaHastaParam = '';
   timeForVehicle = [];
   dataForTable = [];
   constructor(
@@ -38,6 +40,26 @@ export class HomeComponent implements OnInit {
       this.barChart.setData(this.timeForVehicle);
     }
     this.zone.run(() => { });
+  }
+
+  async filter(){
+    var query = ``;
+    if(this.fechaDesdeParam && this.fechaHastaParam) query = `?fechaDesde='${this.fechaDesdeParam}'&fechaHasta='${this.fechaHastaParam}'`;
+    if(this.fechaDesdeParam && !this.fechaHastaParam) query = `?fechaDesde='${this.fechaDesdeParam}'`;
+    if(!this.fechaDesdeParam && this.fechaHastaParam) query = `?fechaHasta='${this.fechaHastaParam}'`;
+    
+    this.timeForVehicle = [];
+    try {
+      this.dataForTable = await this.apiService.get(`timeForvehicle${query}`) as Array<any>;
+      for (const data of this.dataForTable) {
+        this.timeForVehicle.push({ label: data.vehiculo, data: data.tiempo });
+      }
+      this.barChart.setData(this.timeForVehicle);
+    } catch (e) {
+      console.log(e);
+    }
+
+    this.change();
   }
 
 }
