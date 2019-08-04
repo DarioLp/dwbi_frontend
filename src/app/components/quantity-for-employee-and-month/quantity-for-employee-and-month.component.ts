@@ -1,6 +1,7 @@
 import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
 import { ApiService } from 'src/app/service/api.service';
 import { LineChartComponent } from '../line-chart/line-chart.component';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-quantity-for-employee-and-month',
@@ -53,7 +54,10 @@ export class QuantityForEmployeeAndMonthComponent implements OnInit {
   years = [2017, 2018, 2019];
   year: number;
   month: string;
-  constructor(private apiService: ApiService) {
+  constructor(
+    private apiService: ApiService,
+    private ngxService: NgxUiLoaderService
+  ) {
     this.year = this.years[0];
     this.month = '05';
   }
@@ -72,6 +76,7 @@ export class QuantityForEmployeeAndMonthComponent implements OnInit {
     };
 
     try {
+      this.ngxService.start();
       this.values = await this.apiService.post('QuantityForEaD', body) as Array<any>;
       console.log(this.values);
       const found = this.employees.find((employee) => {
@@ -84,6 +89,7 @@ export class QuantityForEmployeeAndMonthComponent implements OnInit {
         labels.push(val.fecha);
       }
       this.lineChart.setData(quantities, labels, found.nombre);
+      this.ngxService.stop();
     } catch (e) {
       console.log(e);
     }

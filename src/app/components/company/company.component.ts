@@ -1,6 +1,7 @@
 import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
 import { ApiService } from 'src/app/service/api.service';
 import { LineChartComponent } from '../line-chart/line-chart.component';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Component({
   selector: 'app-company',
   templateUrl: './company.component.html',
@@ -53,7 +54,10 @@ export class CompanyComponent implements OnInit {
   year: number;
   month: string;
   mode = 'orders';
-  constructor(private apiService: ApiService) {
+  constructor(
+    private apiService: ApiService,
+    private ngxService: NgxUiLoaderService
+  ) {
     this.year = this.years[0];
     this.month = '05';
   }
@@ -61,7 +65,6 @@ export class CompanyComponent implements OnInit {
   async ngOnInit() {
     this.companies = await this.apiService.get('getCompanies') as Array<any>;
     this.company = this.companies[0].dni;
-    this.filter();
   }
 
   async filter() {
@@ -72,6 +75,7 @@ export class CompanyComponent implements OnInit {
     };
     try {
       const url = (this.mode === 'orders') ? 'quantityForCompany' : 'amountForCompany';
+      this.ngxService.start();
       this.values = await this.apiService.post(url, body) as Array<any>;
       const found = this.companies.find((company) => {
         return company.company_id == this.company;
@@ -83,6 +87,7 @@ export class CompanyComponent implements OnInit {
         labels.push(val.fecha);
       }
       this.lineChart.setData(quantities, labels, found.company_name);
+      this.ngxService.stop();
     } catch (e) {
       console.log(e);
     }

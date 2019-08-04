@@ -10,11 +10,12 @@ import {
 } from './components/quantity-for-employee-and-month/quantity-for-employee-and-month.component';
 import { FoodForDateComponent } from './components/food-for-date/food-for-date.component';
 import { QuantitiesByCompanyComponent } from './components/quantities-by-company/quantities-by-company.component';
+import { AnnualAmountComponent } from './components/annual-amount/annual-amount.component';
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'home', component: HomeComponent },
+  { path: '', component: AnnualAmountComponent },
+  { path: 'home', component: AnnualAmountComponent },
   { path: 'quantity-employee', component: QuantityForEmployeeComponent },
   { path: 'quantity-turn', component: QuantityForTurnComponent },
   { path: 'quantity-date-employee', component: QuantityForEmployeeAndMonthComponent },

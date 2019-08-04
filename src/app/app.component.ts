@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-
+import { Component, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,4 +7,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   headerColor = '#E03137';
   title = 'dwbi-front';
+
+  constructor() { }
+
 }

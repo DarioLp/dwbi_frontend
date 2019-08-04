@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from 'src/app/service/api.service';
 import { LineChartComponent } from '../line-chart/line-chart.component';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Component({
   selector: 'app-food-for-date',
   templateUrl: './food-for-date.component.html',
@@ -54,7 +55,10 @@ export class FoodForDateComponent implements OnInit {
   month: string;
   mode = 'orders';
   type: string;
-  constructor(private apiService: ApiService) {
+  constructor(
+    private apiService: ApiService,
+    private ngxService: NgxUiLoaderService
+  ) {
     this.year = this.years[0];
     this.month = '05';
   }
@@ -63,7 +67,6 @@ export class FoodForDateComponent implements OnInit {
     this.foods = await this.apiService.get('getFoods') as Array<any>;
     this.food = 1311;
     this.type = 'plato_principal_id';
-    this.filter();
   }
 
   async filter() {
@@ -75,6 +78,7 @@ export class FoodForDateComponent implements OnInit {
     };
     try {
       const url = (this.mode === 'orders') ? 'quantityForFood' : 'amountForFood';
+      this.ngxService.start();
       this.values = await this.apiService.post(url, body) as Array<any>;
       const found = this.foods.find((food) => {
         return food.id == this.food;
@@ -86,6 +90,7 @@ export class FoodForDateComponent implements OnInit {
         labels.push(val.fecha);
       }
       this.lineChart.setData(quantities, labels, found.food_name);
+      this.ngxService.stop();
     } catch (e) {
       console.log(e);
     }

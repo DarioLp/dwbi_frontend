@@ -1,6 +1,7 @@
-import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild, Output, EventEmitter } from '@angular/core';
 import { ApiService } from 'src/app/service/api.service';
 import { BarChartComponent } from '../bar-chart/bar-chart.component';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-home',
@@ -17,9 +18,11 @@ export class HomeComponent implements OnInit {
   timeForVehicle = [];
   dataForTable = [];
 
+
   constructor(
     private apiService: ApiService,
-    private zone: NgZone) { }
+    private zone: NgZone,
+    private ngxService: NgxUiLoaderService) { }
 
   async ngOnInit() {
     this.filter();
@@ -40,16 +43,19 @@ export class HomeComponent implements OnInit {
     };
     this.timeForVehicle = [];
     try {
+      this.ngxService.start();
       this.dataForTable = await this.apiService.post('timeForvehicle', body) as Array<any>;
       for (const data of this.dataForTable) {
         this.timeForVehicle.push({ label: data.vehiculo, data: data.tiempo });
       }
       this.barChart.setData(this.timeForVehicle);
+      this.ngxService.stop();
     } catch (e) {
       console.log(e);
     }
 
     this.change();
   }
+
 
 }
